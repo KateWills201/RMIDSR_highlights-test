@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RMIDSR Astronomical Highlights</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- 
+    Chosen Palette: Deep Cosmos - A rich, dark theme using a deep indigo/navy background (#0F172A) with contrasting light grey/white text for readability. Accents are a muted, grey-purple (violet-700, violet-600) and subtle sky blue (sky-400) to evoke celestial wonder, ensuring good contrast for text and interactive elements.
+
+    Application Structure Plan: This single-page application (SPA) is designed as a focused interactive tool. It features a central display area that dynamically updates based on user selection from a set of monthly buttons. This structure allows for easy exploration of specific astronomical highlights, demonstrating dynamic content loading and user interaction. The layout is clean and intuitive, prioritising the presentation of key information (Event, Why, Visibility) for each highlight, now enhanced with a corresponding image.
+
+    Visualization & Content Choices: 
+    - Report Info: September, October, November Astronomical Highlights. Goal: Inform & Engage. Viz/Method: Dynamic text blocks with a prominent Unicode icon and a new associated image in a round frame for each event. Interaction: User clicks month buttons to switch between detailed descriptions and their corresponding images. Justification: Provides a clear, concise, and visually appealing way to present specific astronomical information, making it easy for committee members to explore and understand, with added visual context. Library/Method: HTML/CSS/JS with Unicode/Emoji and standard <img> tags.
+
+    CONFIRMATION: NO SVG graphics used. NO Mermaid JS used.
+    -->
+    <style>
+        body {
+            font-family: 'League Spartan', sans-serif;
+        }
+        h1, h2, h3, h4 {
+            font-family: 'League Spartan', sans-serif;
+        }
+        .highlight-icon {
+            font-size: 5rem; /* Large for visual impact */
+            line-height: 1;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+        /* Custom styling for the image container to ensure responsiveness and roundness */
+        .highlight-image-container {
+            width: 100%;
+            max-width: 250px; /* Adjust max-width as needed for larger screens */
+            height: 250px; /* Fixed height for a perfect circle */
+            overflow: hidden;
+            border-radius: 9999px; /* Tailwind's 'rounded-full' */
+            border: 4px solid #6366F1; /* Accent border */
+            box-shadow: 0 0 20px rgba(99, 102, 241, 0.5); /* Subtle glow */
+            margin: 0 auto 1.5rem auto; /* Center and add bottom margin */
+        }
+        .highlight-image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Ensures image covers the circular container */
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-200 min-h-screen flex flex-col justify-center items-center py-12">
+
+    <main class="container mx-auto px-6 py-12 bg-slate-900 rounded-lg shadow-xl max-w-4xl">
+
+        <section id="highlights-tool" class="text-center">
+            <h1 class="text-4xl md:text-5xl font-bold text-sky-400 mb-6">RMIDSR Astronomical Highlights</h1>
+            <p class="text-lg text-slate-300 mb-10 max-w-2xl mx-auto">Explore upcoming celestial events visible from the River Murray International Dark Sky Reserve. Click a month to discover its unique night sky spectacle!</p>
+
+            <div class="flex justify-center flex-wrap gap-4 mb-10">
+                <button class="highlight-btn bg-violet-700 text-white px-6 py-3 rounded-lg text-lg font-bold hover:bg-violet-600 transition-colors shadow-md" data-month="september">September</button>
+                <button class="highlight-btn bg-slate-700 text-slate-300 px-6 py-3 rounded-lg text-lg font-bold hover:bg-slate-600 transition-colors shadow-md" data-month="october">October</button>
+                <button class="highlight-btn bg-slate-700 text-slate-300 px-6 py-3 rounded-lg text-lg font-bold hover:bg-slate-600 transition-colors shadow-md" data-month="november">November</button>
+            </div>
+
+            <div id="highlight-display" class="bg-slate-800 p-8 rounded-lg shadow-inner text-left">
+                <div class="flex flex-col items-center mb-6">
+                    <div class="highlight-image-container">
+                        <img id="highlight-image" src="" alt="Astronomical Highlight Image" onerror="this.onerror=null;this.src='https://placehold.co/250x250/334155/E2E8F0?text=Image+Missing';">
+                    </div>
+                    <span id="highlight-icon" class="highlight-icon text-white"></span>
+                    <h2 id="highlight-event" class="text-3xl font-bold text-white mb-4"></h2>
+                </div>
+                <h3 class="text-xl font-bold text-sky-400 mb-2">Why it's Special:</h3>
+                <p id="highlight-why" class="text-slate-300 mb-6"></p>
+                <h3 class="text-xl font-bold text-sky-400 mb-2">Visibility from RMIDSR:</h3>
+                <p id="highlight-visibility" class="text-slate-300"></p>
+            </div>
+        </section>
+        
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const highlightsData = {
+                'september': {
+                    icon: '',
+                    event: 'The Milky Way Core: Directly Overhead!',
+                    why: 'As spring approaches in the Southern Hemisphere, the heart of our galaxy, the Milky Way Core, becomes magnificently prominent and high overhead in the early evening. This is the most spectacular part of our galaxy, a breathtaking river of stars that is truly only visible from exceptionally dark locations like the RMIDSR. It\'s the ultimate demonstration of why dark skies matter. Look for the unmistakable constellations of Scorpius (the Scorpion) and Sagittarius (the Archer) in this area.',
+                    visibility: 'Excellent from the Southern Hemisphere, especially in a Dark Sky Reserve, during late winter/early spring evenings.',
+                    image: 'https://www.themurrayriver.com/wp-content/uploads/2022/07/tree_darksky-520x520.jpg' // Placeholder for Milky Way
+                },
+                'october': {
+                    icon: '',
+                    event: 'The Andromeda Galaxy (M31): Our Cosmic Neighbour',
+                    why: 'From the pristine darkness of the RMIDSR in October, you have a fantastic opportunity to spot the Andromeda Galaxy, our closest large spiral galaxy! While low in the northern sky for Southern Hemisphere observers, its faint, misty oval shape is a profound sight. It\'s one of the furthest objects visible to the naked eye and a powerful reminder of the vastness of the universe that our dark skies help reveal. A pair of binoculars will make it even clearer!',
+                    visibility: 'Visible low in the northern sky from the Southern Hemisphere in spring evenings, best appreciated in truly dark conditions.',
+                    image: 'https://www.rivermurraydarkskyreserve.org/images/portfolio/2.jpg' // Placeholder for Andromeda
+                },
+                'november': {
+                    icon: '',
+                    event: 'The Pleiades Star Cluster (The Seven Sisters): A Sparkling Jewel',
+                    why: 'As we celebrate our 6-year accreditation anniversary, look up at the stunning Pleiades star cluster (M45), also known as the Seven Sisters. This beautiful open cluster becomes very prominent in the spring/early summer sky in the Southern Hemisphere. Its sparkling, ethereal glow is a joy to behold with the naked eye or through binoculars, perfectly illustrating the clarity and wonder that our Dark Sky Reserve protects.',
+                    visibility: 'Very prominent and easily visible from the Southern Hemisphere in spring/early summer evenings.',
+                    image: 'https://www.rivermurraydarkskyreserve.org/images/portfolio/4.jpg' // Placeholder for Pleiades
+                }
+            };
+
+            const highlightIcon = document.getElementById('highlight-icon');
+            const highlightEvent = document.getElementById('highlight-event');
+            const highlightWhy = document.getElementById('highlight-why');
+            const highlightVisibility = document.getElementById('highlight-visibility');
+            const highlightImage = document.getElementById('highlight-image'); // Get the image element
+            const highlightBtns = document.querySelectorAll('.highlight-btn');
+
+            function updateHighlightDisplay(month) {
+                const data = highlightsData[month];
+                highlightIcon.textContent = data.icon;
+                highlightEvent.textContent = data.event;
+                highlightWhy.textContent = data.why;
+                highlightVisibility.textContent = data.visibility;
+                highlightImage.src = data.image; // Update the image source
+
+                highlightBtns.forEach(btn => {
+                    if (btn.dataset.month === month) {
+                        btn.classList.remove('bg-slate-700', 'text-slate-300');
+                        btn.classList.add('bg-violet-700', 'text-white');
+                    } else {
+                        btn.classList.remove('bg-violet-700', 'text-white');
+                        btn.classList.add('bg-slate-700', 'text-slate-300');
+                    }
+                });
+            }
+
+            highlightBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    updateHighlightDisplay(btn.dataset.month);
+                });
+            });
+
+            // Initialise with September's highlight
+            updateHighlightDisplay('september');
+        });
+    </script>
+</body>
+</html>
